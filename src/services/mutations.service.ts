@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 //API Services
-import { adminKycUser, adminPatch, authAdminFn, createAccount, createAdmin, createAdminTransaction, createBeneficiaryFn, createCardRequestFn, createDepositRequestFn, createSampleAdminFn, createSavingsFn, createTransactionFn, createUserFn, deleteAccount, deleteActivity, deleteBeneficiary, deleteCardRequest, deleteDepositRequest, deleteSavings, deleteSavingsFn, deleteTransactionFn, editAccounts, editDepositRequest, getPrices, getUserBalanceFn, getUserDetailsFn, loginUserFn, passwordResetVerification, patchUser, resendVerificationFn, resetPassword, topUpSavingsFn, updateCardRequest, updateDepositRequestFn, updateDetailsFn, updatePins, updateProfilePictureFn, updateTransaction, userKycFn, validateLoginFn, verifyPasswordResetOtp, verifyUserFn, withdrawSavingsFn } from "./api.service";
+import { adminKycUser, adminPatch, authAdminFn, createAccount, createAdmin, createAdminTransaction, createBeneficiaryFn, createCardRequestFn, createDepositRequestFn, createSampleAdminFn, createSavingsFn, createTransactionFn, createUserFn, deleteAccount, deleteActivity, deleteBeneficiary, deleteCardRequest, deleteDepositRequest, deleteSavings, deleteSavingsFn, deleteTransactionFn, editAccounts, editDepositRequest, getPrices, getUserBalanceFn, getUserDetailsFn, loginUserFn, passwordResetVerification, patchUser, resendVerificationFn, resetPassword, topUpSavingsFn, updateCardRequest, updateDepositRequestFn, updateDetailsFn, updateProfilePictureFn, updateTransaction, userKycFn, validateLoginFn, verifyPasswordResetOtp, verifyUserFn, withdrawSavingsFn } from "./api.service";
 
 //Utils, Store and Types
 import { setAdminTokens, setTokens } from "@/lib/token";
@@ -505,21 +505,6 @@ export function useEditAdmin() {
         },
         onError: (error) => {
             console.error(`Couldn't update admin details:`, error);
-        }
-    })
-}
-
-//Update User Pin
-export function usePinUpdate() {
-
-    const queryClient = useQueryClient();
-    return useMutation({
-        mutationFn: (data: { email: string, taxPin?: string, tacPin?: string, insurancePin?: string }) => updatePins(data),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['allAccounts'] });
-        },
-        onError: (error) => {
-            console.error(`Couldn't update account pins:`, error);
         }
     })
 }

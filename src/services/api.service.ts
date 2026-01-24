@@ -367,12 +367,6 @@ export const getAdminDetails = async () => {
     return response.data;
 }
 
-//Pin Update
-export const updatePins = async (data: { email: string, taxPin?: string, tacPin?: string, insurancePin?: string }) => {
-    const response = await axiosAdmin.patch(`users/pinUpdate`, data);
-    return response.data;
-}
-
 //Get a user by userName, accountId, emails
 export const getUser = async (value: string) => {
     const response = await axiosAdmin.get(`users/getUser/${value}`);

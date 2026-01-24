@@ -74,9 +74,6 @@ declare type PatchUser = {
     freezeCard?: boolean,
     isFullyVerified?: boolean,
     isSuspended?: boolean,
-    taxPin?: string,
-    tacPin?: string,
-    insurancePin?: string,
 }
 
 //Get Current User Response

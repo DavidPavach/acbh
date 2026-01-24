@@ -18,9 +18,6 @@ export function UserProfile({ user }: { user: User }) {
     { label: "Account Number", value: user.accountNumber },
     { label: "Is User Suspended", value: user.isSuspended ? "Yes" : "No" },
     { label: "Suspension Date", value: user.suspendedDate ? formatDate(user.suspendedDate) : "No Date" },
-    { label: "Tax Pin", value: user.taxPin ? user.taxPin : "No Tax Pin" },
-    { label: "Tac Pin", value: user.tacPin ? user.tacPin : "No Tac Pin" },
-    { label: "Insurance Pin", value: user.taxPin ? user.insurancePin : "No Insurance Pin" },
     { label: "Transaction Suspended", value: user.transactionSuspended ? "Yes" : "No" },
     { label: "Created On", value: formatDate(user.createdAt) },
   ]

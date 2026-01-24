@@ -2,9 +2,8 @@ import { useState } from "react";
 import { toast } from "react-fox-toast";
 
 //Services and Utils
-import { usePinUpdate, useUpdateUser } from "@/services/mutations.service";
+import { useUpdateUser } from "@/services/mutations.service";
 import { suspendUser } from "@/services/sockets/socketService";
-import { randomSix } from "@/utils/format";
 
 //Components
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -39,7 +38,6 @@ export function UserSettings({ user }: { user: User }) {
     const [formData, setFormData] = useState(defaultState);
     const [changedData, setChangedData] = useState<Partial<typeof defaultState>>({});
     const [see, setSee] = useState<boolean>(false);
-    const [pinType, setPinType] = useState<"taxPin" | "tacPin" | "insurancePin" | "default">("default");
 
 
     //Functions
@@ -89,33 +87,6 @@ export function UserSettings({ user }: { user: User }) {
                 toast.error(message);
                 resetForm();
             }
-        })
-    }
-
-    const pinUpdate = usePinUpdate();
-    const handlePinUpdate = () => {
-
-        const proceed = confirm(`Update ${user.fullName.toUpperCase()}'s Pin?`);
-        if (!proceed) return toast.error("Pin update was cancelled");
-
-        if (pinType === "default") return toast.error("Kindly select a Pin to continue")
-
-        //Build Payload
-        const payload = { email: user.email, [pinType]: randomSix().toString() };
-
-        // Handle form submission
-        pinUpdate.mutate(payload, {
-            onSuccess: (response) => {
-                toast.success(response.data.message || `${user.fullName.toUpperCase()}'s pin was updated successfully!`);
-                setPinType("default");
-            },
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            onError: (error: any) => {
-                const message = error?.response?.data?.message || `Couldn't update ${user.fullName}'s pin, kindly try again.`;
-                toast.error(message);
-                setPinType("default");
-            }
-
         })
     }
 
@@ -251,27 +222,6 @@ export function UserSettings({ user }: { user: User }) {
                         </Button>
                     </div>
                 </section>
-                <div className="space-y-4 mt-10 py-6 border-neutral-100 border-t">
-                    <h3 className="font-medium text-lightBlack text-sm md:text-base xl:text-lg">Transaction Pin Update</h3>
-                    <div className="gap-4 grid grid-cols-2 sm:grid-cols-3">
-                        <label className="flex items-center gap-x-1 cursor-pointer">
-                            <input type="radio" name="pinType" value="taxPin" checked={pinType === "taxPin"} onChange={() => setPinType("taxPin")} />
-                            Tax PIN
-                        </label>
-                        <label className="flex items-center gap-x-1 cursor-pointer">
-                            <input type="radio" name="pinType" value="tacPin" checked={pinType === "tacPin"} onChange={() => setPinType("tacPin")} />
-                            Tac PIN
-                        </label>
-                        <label className="flex items-center gap-x-1 cursor-pointer">
-                            <input type="radio" name="pinType" value="insurancePin" checked={pinType === "insurancePin"} onChange={() => setPinType("insurancePin")} />
-                            Insurance PIN
-                        </label>
-                    </div>
-                    <Button onClick={handlePinUpdate} disabled={pinUpdate.isPending} className="bg-primary hover:bg-primary/90 text-white">
-                        {pinUpdate.isPending ? <Loader className="mr-2 size-5 animate-spin" /> : <Save className="mr-2 size-5" />}
-                        {pinUpdate.isPending ? "Updating..." : "Update Pin"}
-                    </Button>
-                </div>
             </CardContent >
         </Card >
     )
