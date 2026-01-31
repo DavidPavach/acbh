@@ -62,9 +62,27 @@ const Form = ({ onClose }: { onClose: () => void }) => {
     const actors = ["user", "admin", "system"];
 
     //Functions
-    const handleChange = (key: keyof typeof defaultState | string, value: string | boolean) => {
-        setFormData({ ...formData, [key]: value })
-    }
+    const handleChange = (key: string, value: string | boolean | number) => {
+        setFormData((prev) => {
+            if (key.includes(".")) {
+                const [parent, child] = key.split(".");
+
+                return {
+                    ...prev,
+                    [parent]: {
+                        ...(prev[parent as keyof typeof prev] as Record<string, unknown>),
+                        [child]: value,
+                    },
+                };
+            }
+
+            return {
+                ...prev,
+                [key]: value,
+            };
+        });
+    };
+
 
     const toggleLinkAccount = () => setLinkAccount((prev) => !prev);
 
@@ -119,7 +137,7 @@ const Form = ({ onClose }: { onClose: () => void }) => {
                     <div>
                         <label htmlFor="type">Transaction Type<span className="text-red-600">*</span></label>
                         <Select value={formData.transactionType} onValueChange={(value) => handleChange("transactionType", value)}>
-                            <SelectTrigger className="border-slate-200 focus:border-[#1D9B5E]">
+                            <SelectTrigger className="border-slate-200 focus:border-[#1D9B5E] capitalize">
                                 <SelectValue className="capitalize" placeholder="Transaction Type" />
                             </SelectTrigger>
                             <SelectContent>
@@ -136,7 +154,7 @@ const Form = ({ onClose }: { onClose: () => void }) => {
                     <div>
                         <label htmlFor="subType">Transaction SubType<span className="text-red-600">*</span></label>
                         <Select value={formData.subType} onValueChange={(value) => handleChange("subType", value)}>
-                            <SelectTrigger className="border-slate-200 focus:border-[#1D9B5E]">
+                            <SelectTrigger className="border-slate-200 focus:border-[#1D9B5E] capitalize">
                                 <SelectValue placeholder="Transaction SubType" />
                             </SelectTrigger>
                             <SelectContent>
@@ -168,19 +186,19 @@ const Form = ({ onClose }: { onClose: () => void }) => {
                     {/* Account Name */}
                     <div className="flex flex-col gap-y-1">
                         <label htmlFor="fullName">Account Name<span className="text-red-600">*</span></label>
-                        <Input type="text" id="fullName" className="bg-inherit px-4 py-2 border border-neutral-200 rounded-lg focus:outline-1 focus:outline-none focus:outline-primary w-full text-black duration-300 focus:caret-primary" value={formData.details.fullName} onChange={(e) => handleChange("fullName", e.target.value)} placeholder="Enter Account Name" />
+                        <Input type="text" id="fullName" className="bg-inherit px-4 py-2 border border-neutral-200 rounded-lg focus:outline-1 focus:outline-none focus:outline-primary w-full text-black duration-300 focus:caret-primary" value={formData.details.fullName} onChange={(e) => handleChange("details.fullName", e.target.value)} placeholder="Enter Account Name" />
                     </div>
 
                     {/* Bank Name */}
                     <div className="flex flex-col gap-y-1">
                         <label htmlFor="bankName">Bank Name<span className="text-red-600">*</span></label>
-                        <Input type="text" id="bankName" className="bg-inherit px-4 py-2 border border-neutral-200 rounded-lg focus:outline-1 focus:outline-none focus:outline-primary w-full text-black duration-300 focus:caret-primary" value={formData.details.bankName} onChange={(e) => handleChange("bankName", e.target.value)} placeholder="Enter Bank Name" />
+                        <Input type="text" id="bankName" className="bg-inherit px-4 py-2 border border-neutral-200 rounded-lg focus:outline-1 focus:outline-none focus:outline-primary w-full text-black duration-300 focus:caret-primary" value={formData.details.bankName} onChange={(e) => handleChange("details.bankName", e.target.value)} placeholder="Enter Bank Name" />
                     </div>
 
                     {/* Account Number */}
                     <div className="flex flex-col gap-y-1">
                         <label htmlFor="accountNumber">Account Number / IBAN<span className="text-red-600">*</span></label>
-                        <Input type="text" id="accountNumber" className="bg-inherit px-4 py-2 border border-neutral-200 rounded-lg focus:outline-1 focus:outline-none focus:outline-primary w-full text-black duration-300 focus:caret-primary" value={formData.details.accountNumber} onChange={(e) => handleChange("accountNumber", e.target.value)} placeholder="Enter Account Number" />
+                        <Input type="text" id="accountNumber" className="bg-inherit px-4 py-2 border border-neutral-200 rounded-lg focus:outline-1 focus:outline-none focus:outline-primary w-full text-black duration-300 focus:caret-primary" value={formData.details.accountNumber} onChange={(e) => handleChange("details.accountNumber", e.target.value)} placeholder="Enter Account Number" />
                     </div>
 
                     {/* Amount */}
@@ -216,7 +234,7 @@ const Form = ({ onClose }: { onClose: () => void }) => {
                             <CustomInput type="text" placeholder="DEUTDEFF500" label="Swift Code/BIC" id="swiftCode" value={formData.swiftCode} onChange={(e) => handleChange("swiftCode", e.target.value)} />
 
                             <CustomInput type="text" placeholder="123456789" label="Routing Number" id="routingNumber" value={formData.routingNumber} onChange={(e) => handleChange("routingNumber", e.target.value)} />
-                            
+
                             <CountrySelector onSelect={handleChange} />
                         </div>
                     }

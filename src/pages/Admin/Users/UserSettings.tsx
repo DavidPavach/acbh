@@ -67,7 +67,7 @@ export function UserSettings({ user }: { user: User }) {
     const patchUser = useUpdateUser();
     const handleSubmit = async () => {
 
-        const proceed = confirm(`Update ${user.fullName.toUpperCase()}'s Details?`);
+        const proceed = confirm(`Update ${user.fullName.toUpperCase() || "User"}'s Details?`);
         if (!proceed) return toast.error("Update was cancelled");
 
         if (Object.keys(changedData).length === 0) {

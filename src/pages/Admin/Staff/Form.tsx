@@ -54,7 +54,7 @@ const Form = ({ onClose }: { onClose: () => void; }) => {
                         <Input type="email" id="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} placeholder="Enter Email Address" />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="password">Account Number</Label>
+                        <Label htmlFor="password">Password</Label>
                         <Input id="password" type="text" value={formData.password} onChange={(e) => { setFormData({ ...formData, password: e.target.value }) }} placeholder="Enter Password" />
                     </div>
                     <div className="flex gap-x-5">
