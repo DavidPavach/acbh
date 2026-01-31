@@ -72,13 +72,12 @@ const Table = ({ transactions }: { transactions: TransactionWithUser[] }) => {
                 </main>
             )}
             <main className="w-full overflow-x-auto">
-                <table className="bg-lightBlack rounded-xl min-w-full text-nowrap overflow-hidden text-white">
+                <table className="bg-lightBlack rounded-xl min-w-full overflow-hidden text-white text-nowrap">
                     <thead className="bg-gray-800">
                         <tr>
                             <th className="px-4 py-3 font-medium text-sm text-left">S/N</th>
                             <th className="px-4 py-3 font-medium text-sm text-left">User</th>
                             <th className="px-4 py-3 font-medium text-sm text-left">Amount</th>
-                            <th className="px-4 py-3 font-medium text-sm text-left">Level</th>
                             <th className="px-4 py-3 font-medium text-sm text-left">Description</th>
                             <th className="px-4 py-3 font-medium text-sm text-left">Type</th>
                             <th className="px-4 py-3 font-medium text-sm text-left">Mode</th>

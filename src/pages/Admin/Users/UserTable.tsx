@@ -73,7 +73,6 @@ const UserTable = ({ transactions }: { transactions: TransactionWithUser[] }) =>
                         <tr>
                             <th className="px-4 py-3 font-medium text-sm text-left">S/N</th>
                             <th className="px-4 py-3 font-medium text-sm text-left">Amount</th>
-                            <th className="px-4 py-3 font-medium text-sm text-left">Level</th>
                             <th className="px-4 py-3 font-medium text-sm text-left">Description</th>
                             <th className="px-4 py-3 font-medium text-sm text-left">Type</th>
                             <th className="px-4 py-3 font-medium text-sm text-left">Mode</th>
