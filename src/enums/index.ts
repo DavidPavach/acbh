@@ -22,7 +22,6 @@ export const coinMeta: Record<string, { name: string; symbol: string; logo: stri
   ethereum: { name: "Ethereum", symbol: "ETH", logo: "/ethereum.jpg" },
   tether: { name: "Tether", symbol: "USDT", logo: "/tether.jpg" },
   solana: { name: "Solana", symbol: "SOL", logo: "/solana.jpg" },
-  texel: { name: "Texel", symbol: "TXL", logo: "/logo.svg" },
   dash: { name: "Dash", symbol: "DASH", logo: "/dash.jpg" },
   "bitcoin-cash": { name: "Bitcoin Cash", symbol: "BCH", logo: "/bitcoin cash.jpg" },
 };
